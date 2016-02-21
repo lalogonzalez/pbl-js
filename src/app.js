@@ -49,27 +49,27 @@ var categorias = [
   {
     title: "Restaurantes",
     subtitle: "fast food, etc",
-    icon: "images/no"
+    icon: "images/no.png"
   },
   {
     title: "Electronicos",
     subtitle: "Computadoras, Videojuegos, etc",
-    icon: "images/no"
+    icon: "images/no.png"
   },
   {
     title: "Salud",
     subtitle: "Hospitales, Farmacias",
-    icon: "images/no"
+    icon: "images/no.png"
   },
   {
   	title: "Ropa",
   	subtitle: "Camisas, abrigos, etc",
-    icon: "images/no"
+    icon: "images/no.png"
   },
   {
   	title: "Parques",
   	subtitle: "Recreativos, Deportes, etc",
-    icon: "images/no"
+    icon: "images/no.png"
   }
 ];
 
@@ -82,10 +82,10 @@ var menuCategorias = new UI.Menu({
 
 menuCategorias.on('select', function(e) { //Probablemente esto no funcione :v
   console.log(e.item.icon);
-  if(e.item.icon == "images/no"){
-    e.item.icon = "images/yes";
-  } else if(e.item.icon == "images/no"){
-	  e.item.icon = "images/no";
+  if(e.item.icon == "images/no.png"){
+    e.item.icon = "images/yes.png";
+  } else if(e.item.icon == "images/no.png"){
+	  e.item.icon = "images/no.png";
   }
 	aux_window = menuCategorias;
   aux_window.show();
@@ -106,7 +106,7 @@ var lugar = '{ "nombre":"La Dream Tienda","Distancia":100,"Rating":85,"Categoria
 */
 var main = new UI.Card({
   	title: 'Street Assistant',
-  	icon: 'images/logo',
+  	icon: 'images/logo.png',
   	subtitle: 'Ubica lugares cercanos!',
   	body: 'Selecciona tus categorias preferidas y recibe alertas cuando te encuentres cerca de algun lugar de tu posible interes. *Nota: Conserva la aplicacion abierta para recibir notificaciones.',
 	scrollable: true
