@@ -80,8 +80,8 @@ var menuCategorias = new UI.Menu({
   }]
 });
 
-menuCategorias.selection(function(e) { //Probablemente esto no funcione :v
-  console.log(e.item.icon)
+menuCategorias.on('click', 'select', function(e) { //Probablemente esto no funcione :v
+  console.log(e.item.icon);
   if(e.item.icon == "images/no"){
     e.item.icon = "images/yes";
   }else{
