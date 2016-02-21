@@ -48,23 +48,28 @@ var aux_window = null;
 var categorias = [
   {
     title: "Restaurantes",
-    subtitle: "fast food, etc"
+    subtitle: "fast food, etc",
+    icon: "images/no"
   },
   {
     title: "Electronicos",
-    subtitle: "Computadoras, Videojuegos, etc"
+    subtitle: "Computadoras, Videojuegos, etc",
+    icon: "images/no"
   },
   {
     title: "Salud",
-    subtitle: "Hospitales, Farmacias"
+    subtitle: "Hospitales, Farmacias",
+    icon: "images/no"
   },
   {
   	title: "Ropa",
-  	subtitle: "Camisas, abrigos, etc"
+  	subtitle: "Camisas, abrigos, etc",
+    icon: "images/no"
   },
   {
   	title: "Parques",
-  	subtitle: "Recreativos, Deportes, etc"
+  	subtitle: "Recreativos, Deportes, etc",
+    icon: "images/no"
   }
 ];
 
@@ -73,6 +78,18 @@ var menuCategorias = new UI.Menu({
     title: 'Lista Categorias',
     items: categorias
   }]
+});
+
+menuCategorias.selection(function(e) { //Probablemente esto no funcione :v
+  console.log(e.item.icon)
+  if(e.item.icon == "images/no"){
+    e.item.icon = "images/yes";
+  }else{
+    e.item.icon = "images/no";
+  }
+  
+  //console.log('Currently selected item is #' + e.itemIndex + ' of section #' + e.sectionIndex);
+  //console.log('The item is titled "' + e.item.title + '"');
 });
 
 var lugar = '{ "nombre":"La Dream Tienda","Distancia":100,"Rating":85,"Categoria":"Electronicos"}';
