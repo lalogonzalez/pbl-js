@@ -7,6 +7,7 @@
 var UI = require('ui');
 var Vector2 = require('vector2');
 var id;
+var card_location= new UI.Card();
 
 var locationOptions = {
   enableHighAccuracy: true, 
@@ -17,11 +18,17 @@ var locationOptions = {
 function locationSuccess(pos) {
   console.log('Location changed!');
   console.log('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
-  var card = new UI.Card();
-  card.title('A Card');
-  card.subtitle('Is a Window');
-  card.body('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
-  card.show();
+  card_location.title('It works');
+  card_location.subtitle('Location');
+  card_location.body('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
+  card_location.show();
+}
+
+function forcedLocationSuccess(pos) {
+  card_location.title('Forced');
+  card_location.subtitle('Location');
+  card_location.body('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
+  card_location.show();
 }
 
 function locationError(err) {
@@ -30,10 +37,13 @@ function locationError(err) {
 
 Pebble.addEventListener('ready',
   function(e) {
+    console.log('ready');
     // Get location updates
-    id = navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
+    //id = navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
   }
 );
+
+navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
 
 var main = new UI.Card({
   title: 'Pebble.js',
@@ -82,9 +92,6 @@ main.on('click', 'select', function(e) {
 });
 
 main.on('click', 'down', function(e) {
-  var card = new UI.Card();
-  card.title('A Card');
-  card.subtitle('Is a Window');
-  card.body('The simplest window type in Pebble.js.');
-  card.show();
+  navigator.geolocation.getCurrentPosition(forcedLocationSuccess, locationError, locationOptions);
+  
 });
