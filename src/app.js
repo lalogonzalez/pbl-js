@@ -85,7 +85,7 @@ var main = new UI.Card({
   	title: 'Street Assistant',
   	icon: 'images/menu_icon.png',
   	subtitle: 'Ubica lugares cercanos!',
-  	body: 'Selecciona las categorias de tu interes y recibe alertas cuando te encuentres cerca de algun lugar de tu posible interes. *Nota: Conserva la aplicacion abierta para recibir notificaciones.',
+  	body: 'Selecciona tus categorias preferidas y recibe alertas cuando te encuentres cerca de algun lugar de tu posible interes. *Nota: Conserva la aplicacion abierta para recibir notificaciones.',
 	scrollable: true
 });
 
