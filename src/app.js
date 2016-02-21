@@ -26,9 +26,9 @@ var locationOptions = {
 /*
 *     WINDOWS
 */
-var menuCategorias = null;
-var aux_window = null;
-var detailCard = null;
+var menuCategorias;
+var aux_window;
+var detailCard;
 
 
 
@@ -65,6 +65,7 @@ Wakeup.launch(function(e) {
 */
 
 
+
 /*
 *     LOCALIZACION
 */
@@ -98,10 +99,12 @@ var ajax = require('ajax');
 ajax(
    {
       url: 'http://www.hack.educacioncreativa.org/v1.0/log',
-      type: 'json'
+      type: 'json',
+		method: 'post',
+		data: {token: Pebble.getAccountToken()}
    },
    function(data, status, request) {
-      var datos = JSON.parse(data);
+      var datos = data;
       var categorias = [];
       var icono;
       for (var i = 0; i < 8; i++) {
@@ -160,6 +163,12 @@ main.on('click', 'down', function(e) {
 /*
 *     CATEGORIAS
 */
+menuCategorias = new UI.Menu({
+         sections: [{
+            title: 'Lista Categorias',
+         }]
+      });
+
 menuCategorias.on('click', 'up', function(e) {
 
 });
@@ -219,6 +228,9 @@ menuCategorias.on('click', 'back', function(e) {
 /*
 *     DETAIL CARD
 */
+detailCard = new UI.Card({
+            title: 'Provisional'
+         });
 detailCard.on('click', 'up', function(e) {
 	aux_window = main;
    aux_window.show();
