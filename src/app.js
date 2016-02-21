@@ -30,6 +30,7 @@ ajax(
 *		MISC
 */
 var UI = require('ui');					//user interface
+var Vibe = require('ui/vibe');
 var Vector2 = require('vector2');	//arrays
 var id;
 
@@ -40,6 +41,39 @@ var locationOptions = {
 };
 
 var aux_window = null;
+
+
+
+/*
+*		WAKEUP
+*/
+var Wakeup = require('wakeup');
+Wakeup.schedule(
+  {
+    // Set the wakeup event for one minute from now
+    time: Date.now() / 1000 + 60
+  },
+  function(e) {
+    if (e.failed) {
+      // Log the error reason
+      console.log('Wakeup set failed: ' + e.error);
+    } else {
+      console.log('Wakeup set! Event ID: ' + e.id);
+		//Pebble.sendAppMessage(address, callbackForAck, callbackForNack)
+    }
+  }
+);
+
+// Query whether we were launched by a wakeup event
+Wakeup.launch(function(e) {
+  if (e.wakeup) {
+    	Vibe.vibrate('long');
+    	console.log('Woke up to ' + e.id + '! data: ' + JSON.stringify(e.data));
+  } else {
+    console.log('Regular launch not by a wakeup event.');
+  }
+});
+
 
 
 /*
