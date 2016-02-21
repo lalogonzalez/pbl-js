@@ -30,8 +30,8 @@
                 "type": "font"
             },
             {
-                "file": "images/logo",
-                "name": "IMAGES_LOGO",
+                "file": "images/yes",
+                "name": "IMAGES_YES",
                 "type": "png"
             },
             {
@@ -40,8 +40,8 @@
                 "type": "png"
             },
             {
-                "file": "images/yes",
-                "name": "IMAGES_YES",
+                "file": "images/logo",
+                "name": "IMAGES_LOGO",
                 "type": "png"
             }
         ]

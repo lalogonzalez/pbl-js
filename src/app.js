@@ -80,16 +80,22 @@ var menuCategorias = new UI.Menu({
   }]
 });
 
-menuCategorias.on('click', 'select', function(e) { //Probablemente esto no funcione :v
+menuCategorias.on('select', function(e) { //Probablemente esto no funcione :v
   console.log(e.item.icon);
   if(e.item.icon == "images/no"){
     e.item.icon = "images/yes";
-  }else{
-    e.item.icon = "images/no";
+  } else if(e.item.icon == "images/no"){
+	  e.item.icon = "images/no";
   }
-  
+	aux_window = menuCategorias;
+  aux_window.show();
   //console.log('Currently selected item is #' + e.itemIndex + ' of section #' + e.sectionIndex);
   //console.log('The item is titled "' + e.item.title + '"');
+});
+
+menuCategorias.on('click', 'back', function(e) {
+	aux_window = main;
+	aux_window.show();
 });
 
 var lugar = '{ "nombre":"La Dream Tienda","Distancia":100,"Rating":85,"Categoria":"Electronicos"}';
@@ -100,14 +106,11 @@ var lugar = '{ "nombre":"La Dream Tienda","Distancia":100,"Rating":85,"Categoria
 */
 var main = new UI.Card({
   	title: 'Street Assistant',
-  	icon: 'images/menu_icon.png',
+  	icon: 'images/logo',
   	subtitle: 'Ubica lugares cercanos!',
   	body: 'Selecciona tus categorias preferidas y recibe alertas cuando te encuentres cerca de algun lugar de tu posible interes. *Nota: Conserva la aplicacion abierta para recibir notificaciones.',
 	scrollable: true
 });
-
-aux_window = main;
-aux_window.show();
 
 
 /*
@@ -134,9 +137,6 @@ Pebble.addEventListener('ready',
   }
 );
 
-navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
-
-aux_window.show();
 
 
 /*
@@ -155,5 +155,13 @@ main.on('click', 'down', function(e) {
 	//MOSTRAR VENTANA SIGUIENTE
 });
 
+
+
+/*
+*		START
+*/
+navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
+aux_window = main;
+aux_window.show();
 
 
