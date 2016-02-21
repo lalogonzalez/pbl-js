@@ -84,11 +84,13 @@ menuCategorias.on('select', function(e) { //Probablemente esto no funcione :v
   console.log(e.item.icon);
   if(e.item.icon == "images/no.png"){
     e.item.icon = "images/yes.png";
-  } else if(e.item.icon == "images/no.png"){
+     menucategorias.item(e.sectionIndex, e.itemIndex, {title: e.item.title, subtitle: "images/yes.png"});
+  } else if(e.item.icon == "images/yes.png"){
 	  e.item.icon = "images/no.png";
+    menucategorias.item(e.sectionIndex, e.itemIndex, {title: e.item.title, subtitle: "images/no.png"});
   }
-	aux_window = menuCategorias;
-  aux_window.show();
+	//aux_window = menuCategorias;
+  //aux_window.show();
   //console.log('Currently selected item is #' + e.itemIndex + ' of section #' + e.sectionIndex);
   //console.log('The item is titled "' + e.item.title + '"');
 });
