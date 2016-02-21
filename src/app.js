@@ -114,7 +114,7 @@ ajax(
             icono = "images/no.png";
          }
          categorias[i] = { title: '' + datos[i].nombre,
-                           subtitle: '' + datos[i].subtitulo ,
+                           subtitle: '' + datos[i].sub ,
                            icon: icono
                         };
       }
@@ -166,6 +166,7 @@ main.on('click', 'down', function(e) {
 menuCategorias = new UI.Menu({
          sections: [{
             title: 'Lista Categorias',
+				icon: 'images/no.png'
          }]
       });
 
@@ -189,6 +190,7 @@ menuCategorias.on('select', function(e) {
       {
          url: 'http://www.hack.educacioncreativa.org/v1.0/updateCategoria',
          type: 'json',
+			method: 'post',
          data: { id: e.itemindex, token:Pebble.getAccountToken(), status:valor}
       },
       function(data, status, request) {
@@ -201,7 +203,7 @@ menuCategorias.on('select', function(e) {
 
          detailCard = new UI.Card({
             title: menuCategorias[e.itemIndex].title,
-            subtitle: menuCategorias[e.itemIndex].subtitle,
+            subtitle: menuCategorias[e.itemIndex].sub,
             body: cuerpo
          });
 
