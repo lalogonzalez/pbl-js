@@ -6,6 +6,34 @@
 
 var UI = require('ui');
 var Vector2 = require('vector2');
+var id;
+
+var locationOptions = {
+  enableHighAccuracy: true, 
+  maximumAge: 0, 
+  timeout: 5000
+};
+
+function locationSuccess(pos) {
+  console.log('Location changed!');
+  console.log('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
+  var card = new UI.Card();
+  card.title('A Card');
+  card.subtitle('Is a Window');
+  card.body('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
+  card.show();
+}
+
+function locationError(err) {
+  console.log('location error (' + err.code + '): ' + err.message);
+}
+
+Pebble.addEventListener('ready',
+  function(e) {
+    // Get location updates
+    id = navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
+  }
+);
 
 var main = new UI.Card({
   title: 'Pebble.js',
