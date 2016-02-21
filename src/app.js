@@ -8,21 +8,43 @@
 /*
 *	AJAX
 */
-/*
+
+var menuCategorias = null;
+
 var ajax = require('ajax');
 ajax(
   {
-    url: 'http://api.theysaidso.com/qod.json',
+    url: 'http://www.hack.educacioncreativa.org/v1.0/log',
     type: 'json'
   },
   function(data, status, request) {
-    console.log('Quote of the day is: ' + data.contents.quote);
+    var datos = JSON.parse(data);
+    var categorias = [];
+    var icono;
+    for (var i = 0; i < 8; i++) {
+      if(datos[i].status == 1){
+            icono="images/yes.png";
+      }else if(datos[i].status===0){
+            icono="images/no.png";
+      }
+      categorias[i] = { title: '' + datos[i].nombre,
+                     subtitle: '' + datos[i].subtitulo ,
+                     icon: icono
+                };
+    }
+  menuCategorias = new UI.Menu({
+  sections: [{
+    title: 'Lista Categorias',
+    items: categorias
+  }]
+});
+
   },
   function(error, status, request) {
     console.log('The ajax request failed: ' + error);
   }
 );
-*/
+
 
 
 
@@ -41,6 +63,7 @@ var locationOptions = {
 };
 
 var aux_window = null;
+var detailCard = null;
 
 
 
@@ -75,69 +98,42 @@ Wakeup.launch(function(e) {
 });
 
 
-
-/*
-*		CATEGORIAS
-*/
-var categorias = [
-  {
-    title: "Restaurantes",
-    subtitle: "fast food, etc",
-    icon: "images/no.png"
-  },
-  {
-    title: "Electronicos",
-    subtitle: "Computadoras, Videojuegos, etc",
-    icon: "images/no.png"
-  },
-  {
-    title: "Salud",
-    subtitle: "Hospitales, Farmacias",
-    icon: "images/no.png"
-  },
-  {
-  	title: "Ropa",
-  	subtitle: "Camisas, abrigos, etc",
-    icon: "images/no.png"
-  },
-  {
-  	title: "Parques",
-  	subtitle: "Recreativos, Deportes, etc",
-    icon: "images/no.png"
-  }
-];
-
-var menuCategorias = new UI.Menu({
-  sections: [{
-    title: 'Lista Categorias',
-    items: categorias
-  }]
-});
-
 menuCategorias.on('select', function(e) { //Probablemente esto no funcione :v
-  /*
-  console.log(e.item.icon);
-  if(e.item.icon == "images/no.png"){
-    e.item.icon = "images/yes.png";
-     menuCategorias.item(e.sectionIndex, e.itemIndex, {title: e.item.title, subtitle: "images/yes.png"});
-  } else if(e.item.icon == "images/yes.png"){
-	  e.item.icon = "images/no.png";
-    menuCategorias.item(e.sectionIndex, e.itemIndex, {title: e.item.title, subtitle: "images/no.png"});
+  //mandar json
+  var valor;
+  if (menuCategorias[e.itemindex].icon=="images/yes.png"){
+    valor=0;
+  }else{
+    valor=1;
   }
-  */
-	//aux_window = menuCategorias;
-  //aux_window.show();
-  //console.log('Currently selected item is #' + e.itemIndex + ' of section #' + e.sectionIndex);
-  //console.log('The item is titled "' + e.item.title + '"');
+  var ajax_activacion = require('ajax');
+  ajax_activacion(
+  {
+    url: 'http://www.hack.educacioncreativa.org/v1.0/updateCategoria',
+    type: 'json',
+    data: { id: e.itemindex, token:Pebble.getAccountToken(), status:valor}
+  },
+    function(data, status, request) {
+      var cuerpo;
+      if (valor == 1){
+        cuerpo = "Activado";
+      } else {
+        cuerpo = "Desactivado";
+      }
+      detailCard = new UI.Card({
+        title: menuCategorias[e.itemIndex].title,
+        subtitle: menuCategorias[e.itemIndex].subtitle,
+        body: cuerpo
+      }
+        );
+      aux_window = detailCard;
+      aux_window.show();
+  },
+  function(error, status, request) {
+    console.log('The ajax request failed: ' + error);
+  }
+);  
 });
-
-menuCategorias.on('click', 'back', function(e) {
-	aux_window = main;
-	aux_window.show();
-});
-
-var lugar = '{ "nombre":"La Dream Tienda","Distancia":100,"Rating":85,"Categoria":"Electronicos"}';
-
 
 /*
 *		MAIN
@@ -150,6 +146,10 @@ var main = new UI.Card({
 	scrollable: true
 });
 
+menuCategorias.on('click', 'back', function(e) {
+	aux_window = main;
+	aux_window.show();
+});
 
 /*
 *		LOCALIZACION
@@ -193,7 +193,25 @@ main.on('click', 'down', function(e) {
 	//MOSTRAR VENTANA SIGUIENTE
 });
 
+detailCard.on('click', 'up', function(e) {
+	aux_window = main;
+  aux_window.show();
+});
 
+detailCard.on('click', 'select', function(e) {
+	aux_window = main;
+  aux_window.show();
+});
+
+detailCard.on('click', 'down', function(e) {
+	aux_window = main;
+  aux_window.show();
+});
+
+detailCard.on('click', 'back', function(e) {
+	aux_window = main;
+  aux_window.show();
+});
 
 /*
 *		START
