@@ -174,6 +174,8 @@ menuCategorias.on('click', 'up', function(e) {
 
 });
 
+
+var ajax_activacion = require('ajax');
 menuCategorias.on('select', function(e) {
    //mandar json
    var valor;
@@ -185,7 +187,6 @@ menuCategorias.on('select', function(e) {
    /*
    *     AJAX SEND
    */
-   var ajax_activacion = require('ajax');
    ajax_activacion(
       {
          url: 'http://www.hack.educacioncreativa.org/v1.0/updateCategoria',
@@ -261,3 +262,5 @@ detailCard.on('click', 'back', function(e) {
 navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
 aux_window = main;
 aux_window.show();
+ajax();
+ajax_activacion();
